@@ -245,42 +245,80 @@
     <div class="overlay">
       <div class="login" id="login">
         <div class="top">
-          <h2>Log in</h2>
+          <h2>Connexion</h2>
           <i class="fa-solid fa-xmark close"></i>
         </div>
         <div class="row">
           <div class="content">
             <div class="login-left">
-              <form action="#">
-                <input type="text" placeholder="Username" />
+              <form action="#" method="POST">
+                <input type="text" placeholder="Nom d'utilisateur" name="username" />
                 <div class="form-group">
-                  <input type="password" placeholder="Password" />
-                  <div><i class="fa-regular fa-eye"></i> <span>Show</span></div>
+                  <input type="password" placeholder="Mot de passe" name="password" />
+                  <div><i class="fa-regular fa-eye"></i> <span>Voir</span></div>
                 </div>
-                <a href="#">Forget your password?</a>
+                <a href="#">Mot de passe oublié?</a>
                 <div class="remember">
                   <input type="checkbox" name="remember" value="1" checked />
-                  <label for="remember">Stay logged in</label>
+                  <label for="remember">Rester connecté</label>
                 </div>
-                <button type="submit" class="btn btn-red">Log in</button>
+                <button type="submit" class="btn btn-red">Se connecter</button>
+
+                <?php
+                // Vérifier si le formulaire a été soumis
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Récupérer les valeurs du formulaire
+                    $username = $_POST["username"];
+                    $password = $_POST["password"];
+
+                    // Connexion à la base de données
+                    $servername = "localhost";
+                    $username_db = "root";
+                    $password_db = "";
+                    $dbname = "forumelevage";
+
+                    $conn = new mysqli($servername, $username_db, $password_db, $dbname);
+
+                    // Vérifier la connexion
+                    if ($conn->connect_error) {
+                        die("Connexion échouée: " . $conn->connect_error);
+                    }
+
+                    // Préparer et exécuter la requête SQL pour vérifier l'identité de l'utilisateur
+                    $sql = "SELECT * FROM utilisateurs WHERE username = '$username' AND password = '$password'";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        echo "Identité vérifiée. L'utilisateur est connecté.";
+                        // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
+                    } else {
+                        echo "Identifiants incorrects. Veuillez réessayer.";
+                        // Afficher un message d'erreur ou rediriger vers une autre page en cas d'identifiants incorrects
+                    }
+
+                    // Fermer la connexion à la base de données
+                    $conn->close();
+                }
+                ?>
+
               </form>
             </div>
             <div class="line"></div>
             <div class="login-right">
               <a href="#" class="btn"
                 ><i class="fa-brands fa-square-facebook"></i>
-                <span>Login with Facebook</span></a
+                <span>Se connecter avec Facebook</span></a
               >
               <a href="#" class="btn"
                 ><img src="img/download.png" /><span>
-                  Login with Google</span
+                Se connecter avec Google</span
                 ></a
               >
             </div>
           </div>
           <div class="bottom">
-            <h4>New to Honda Shadow Forums?</h4>
-            <a href="subscribe.html">join now</a>
+            <h4>Nouveau frorum d'élevage?</h4>
+            <a href="subscribe.html">Rejoindre maintenant</a>
           </div>
         </div>
       </div>
