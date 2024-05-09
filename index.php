@@ -28,7 +28,7 @@
             <div class="nav-group">
               <ul>
                 <li>
-                  <a href="#"><i class="fa-solid fa-comment"></i></a>
+                  <a href="#" onclick="openPopup()"><i class="fa-solid fa-comment"></i></a>
                 </li>
                 <li>
                   <a href="#"><i class="fa-solid fa-list-ul"></i></a>
@@ -306,28 +306,22 @@
 
     <div class="postOverlay" id="postOverlay" onclick="closePopup()"></div>
 
-    <div class="popup-container" id="popup">
+    <div class="popup-container" id="postPopup">
         <h2 align="center">Nouveau Post</h2>
+        <i class="fa-solid fa-xmark close" onclick="closePopup()"></i>
         <form action="#" method="POST">
           <label for="titre">Titre</label>
           <input type="text" id="titre" name="titre" required>
-            
 			    <label for="category">Catégorie</label>
           <input type="text" id="category" name="category" required>
-    
-          <label for="dateN">Date de Naissance</label>
-          <input type="text" id="dateN" name="dateNaissance" placeholder="jj/mm/aaaa" required>
-
-			    <label for="montant">Solde Initial</label>
-          <input type="number" id="montant" name="montant" required>
-          <button>Valider</button>
+          <button class="btn btn-red">Valider</button>
         </form>
     </div>
 
     <script
       src="https://kit.fontawesome.com/9e5ba2e3f5.js"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous">
+    </script>
     <script src="js/index.js"></script>
 
 

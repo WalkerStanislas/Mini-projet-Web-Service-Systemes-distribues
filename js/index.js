@@ -11,11 +11,11 @@ closeBtn.addEventListener("click", () => {
 });
 
 function openPopup() {
-  document.getElementById('post_popup').style.display = 'block';
-  document.getElementById('post_overlay').style.display = 'block';
+  document.getElementById('postPopup').style.display = 'block';
+  document.getElementById('postOverlay').style.display = 'block';
 }
 
 function closePopup() {
-  document.getElementById('post_popup').style.display = 'none';
-  document.getElementById('post_overlay').style.display = 'none';
+  document.getElementById('postPopup').style.display = 'none';
+  document.getElementById('postOverlay').style.display = 'none';
 }
