@@ -1,6 +1,28 @@
 <?php 
     // demarrer une session
     session_start(); 
+
+    // Vérifier si l'utilisateur a cliqué sur le lien de déconnexion
+    if (isset($_GET['logout'])) {
+      // Détruire toutes les variables de session
+      $_SESSION = array();
+
+      // Supprimer le cookie de session
+      if (ini_get("session.use_cookies")) {
+          $params = session_get_cookie_params();
+          setcookie(session_name(), '', time() - 42000,
+              $params["path"], $params["domain"],
+              $params["secure"], $params["httponly"]
+          );
+      }
+
+      // Détruire la session
+      session_destroy();
+
+      // Rediriger l'utilisateur vers une autre page après la déconnexion
+      header("Location: index.php"); // Remplacez "index.php" par l'URL de la page vers laquelle vous souhaitez rediriger l'utilisateur après la déconnexion
+      exit;
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,12 +56,9 @@
                 <li>
                   <a href="#" onclick="openPopup()"><i class="fa-solid fa-comment"></i></a>
                 </li>
-                <li>
-                  <a href="#"><i class="fa-solid fa-list-ul"></i></a>
-                </li>
                   <?php echo getUserIsConect() ?> 
                 <li>
-                  <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                  <a href="?logout=1"><i class="fa-solid fa-power-off"></i></a>
                 </li>
               </ul>
             </div>
@@ -254,7 +273,7 @@
                     // Connexion à la base de données
                     $servername = "localhost";
                     $username_db = "root";
-                    $password_db = "root";
+                    $password_db = "";
                     $dbname = "forumelevage";
 
                     $conn = new mysqli($servername, $username_db, $password_db, $dbname);
@@ -332,8 +351,8 @@
         // You need to replace the database connection details with your own
         $servername = "localhost";
         $username = "root";
-        $password = "root";
-        $dbname = "ForumElevage";
+        $password = "";
+        $dbname = "forumelevage";
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);

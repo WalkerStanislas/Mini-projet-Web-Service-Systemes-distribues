@@ -2,8 +2,8 @@
 // Connexion à la base de données (à remplacer par vos propres informations de connexion)
 $servername = "localhost";
 $username = "root";
-$password = "root";
-$dbname = "ForumElevage";
+$password = "";
+$dbname = "forumelevage";
 
 // Connexion
 $conn = new mysqli($servername, $username, $password, $dbname);
