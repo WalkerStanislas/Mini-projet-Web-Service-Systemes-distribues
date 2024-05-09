@@ -52,7 +52,7 @@
         <div class="row">
           <section class="left">
             <h2>Ces discussions pourraient vous intérésser</h2>
-            
+  
 
               <div class="inner-left">
                 <?php include 'forum.php'; ?>
