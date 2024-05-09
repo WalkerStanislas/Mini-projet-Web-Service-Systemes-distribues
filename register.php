@@ -54,13 +54,13 @@
             <form action="#" method="post">
               <h2>Inscription</h2>
               <div class="form-group">
-                <input type="text" name="username" id="" placeholder="Nom d'utilisateur">
+                <input type="text" name="username" id="" placeholder="Nom d'utilisateur" required>
               </div>
               <div class="form-group">
-                <input type="email" name="email" id="" placeholder="Email">
+                <input type="email" name="email" id="" placeholder="Email" required>
               </div>
               <div class="form-group">
-                <input type="password" name="password" id="" placeholder="Mot de Passe">
+                <input type="password" name="password" id="" placeholder="Mot de Passe" required>
               </div>
               <span>Le mot de passe est obligatoire.</span>
               <div class="form-group check">
@@ -84,7 +84,7 @@
                     // Connexion à la base de données
                     $servername = "localhost";
                     $username_db = "root";
-                    $password_db = "";
+                    $password_db = "root";
                     $dbname = "forumelevage";
 
                     $conn = new mysqli($servername, $username_db, $password_db, $dbname);

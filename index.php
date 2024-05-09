@@ -54,7 +54,7 @@
             <div class="nav-group">
               <ul>
                 <li>
-                  <a href="#" onclick="openPopup()"><i class="fa-solid fa-comment"></i></a>
+                  <a href="#" onclick="openPopup()"><i class="fa-solid fa-plus-square"></i></a>
                 </li>
                   <?php echo getUserIsConect() ?> 
                 <li>
@@ -266,14 +266,14 @@
                 // Vérifier si le formulaire a été soumis
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $actual_username = ""; 
-                  // Récupérer les valeurs du formulaire
+                    // Récupérer les valeurs du formulaire
                     $username = $_POST["username"];
                     $password = $_POST["password"];
 
                     // Connexion à la base de données
                     $servername = "localhost";
                     $username_db = "root";
-                    $password_db = "";
+                    $password_db = "root";
                     $dbname = "forumelevage";
 
                     $conn = new mysqli($servername, $username_db, $password_db, $dbname);
@@ -317,7 +317,7 @@
             </div>
           </div>
           <div class="bottom">
-            <h4>Nouveau frorum d'élevage?</h4>
+            <h4>Nouveau au forum d'élevage?</h4>
             <a href="subscribe.html">Rejoindre maintenant</a>
           </div>
         </div>
@@ -331,10 +331,50 @@
         <i class="fa-solid fa-xmark close" onclick="closePopup()"></i>
         <form action="#" method="POST">
           <label for="titre">Titre</label>
-          <input type="text" id="titre" name="titre" required>
+          <input type="text" id="titre" name="title" required>
 			    <label for="category">Catégorie</label>
           <input type="text" id="category" name="category" required>
-          <button class="btn btn-red">Valider</button>
+          <button type="submit" class="btn btn-red">Valider</button>
+          
+          <?php
+            // Vérifier si le formulaire a été soumis
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+              // Récupérer les valeurs du formulaire
+              $title = $_POST["title"];
+              $category = $_POST["category"];
+              $username = $_SESSION['username'];
+
+              // Connexion à la base de données
+              $servername = "localhost";
+              $username_db = "root";
+              $password_db = "root";
+              $dbname = "forumelevage";
+
+              $conn = new mysqli($servername, $username_db, $password_db, $dbname);
+
+              // Vérifier la connexion
+              if ($conn->connect_error) {
+                  die("Connexion échouée: " . $conn->connect_error);
+              }
+
+              // Préparer et exécuter la requête SQL pour vérifier l'identité de l'utilisateur
+              $sql = "INSERT INTO discussions (title, category, author) VALUES ('$title', '$category', '$username')";
+              $result = $conn->query($sql);
+
+              if ($result === TRUE) {
+                  echo "Post réussi";
+                  echo "<script>window.location.href='index.php'</script>";
+                  // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
+              } else {
+                  echo "Erreur lors de l'enregistrement du post. Veuillez réessayer.";
+                  // Afficher un message d'erreur ou rediriger vers une autre page en cas d'identifiants incorrects
+              }
+
+              // Fermer la connexion à la base de données
+              $conn->close();
+            }
+          ?>
+
         </form>
     </div>
 
@@ -351,7 +391,7 @@
         // You need to replace the database connection details with your own
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $password = "root";
         $dbname = "forumelevage";
 
         // Create connection
