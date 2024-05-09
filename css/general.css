@@ -113,6 +113,8 @@ main {
   width: 100%;
 }
 
+
+
 @media (min-width: 1300px) and (max-width: 1599px) {
   .container {
     width: 1200px;
