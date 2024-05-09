@@ -2,7 +2,7 @@
 // Connexion à la base de données (à remplacer par vos propres informations de connexion)
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "ForumElevage";
 
 // Connexion

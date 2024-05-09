@@ -9,3 +9,13 @@ join.addEventListener("click", () => {
 closeBtn.addEventListener("click", () => {
   overlay.classList.remove("active");
 });
+
+function openPopup() {
+  document.getElementById('postPopup').style.display = 'block';
+  document.getElementById('postOverlay').style.display = 'block';
+}
+
+function closePopup() {
+  document.getElementById('postPopup').style.display = 'none';
+  document.getElementById('postOverlay').style.display = 'none';
+}
