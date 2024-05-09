@@ -1,3 +1,7 @@
+<?php 
+    // demarrer une session
+    session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,12 +37,7 @@
                 <li>
                   <a href="#"><i class="fa-solid fa-list-ul"></i></a>
                 </li>
-                <li class="join">
-                  <a href="#">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Se connecter / Rejoindre</span>
-                  </a>
-                </li>
+                  <?php echo getUserIsConect() ?> 
                 <li>
                   <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
                 </li>
@@ -242,12 +241,13 @@
                   <input type="checkbox" name="remember" value="1" checked />
                   <label for="remember">Rester connecté</label>
                 </div>
-                <button type="submit" class="btn btn-red">Se connecter</button>
+                <button type="submit" class="btn btn-red" >Se connecter</button>
 
                 <?php
                 // Vérifier si le formulaire a été soumis
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    // Récupérer les valeurs du formulaire
+                    $actual_username = ""; 
+                  // Récupérer les valeurs du formulaire
                     $username = $_POST["username"];
                     $password = $_POST["password"];
 
@@ -270,6 +270,7 @@
 
                     if ($result->num_rows > 0) {
                         echo "Identité vérifiée. L'utilisateur est connecté.";
+                        $_SESSION['username'] = $username;
                         // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
                     } else {
                         echo "Identifiants incorrects. Veuillez réessayer.";
@@ -347,6 +348,15 @@ function getPostCount() {
         // Return 0 if there was an error
         return 0;
     }
+}
+function getUserIsConect(){
+  if (isset($_SESSION['username'])){
+      // Afficher le nom d'utilisateur
+      echo '<li> <span> <h2 style= "color: white;">' . $_SESSION['username'] . '</h2></span> </li>';
+  } else{
+    // Afficher le lien de connexion
+    echo '<li class="join"><a href="#"><i class="fa-solid fa-user"></i><span>Se connecter / Rejoindre</span></a></li>';
+  }
 }
 ?>
   </body>
