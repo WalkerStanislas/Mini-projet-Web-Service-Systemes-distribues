@@ -16,8 +16,7 @@
           <div class="header-content">
             <div class="logo">
               <a href="index.php"
-                ><img src="img/LogoApplication .svg" alt="logo"
-              /></a>
+                ><p>GUOULGUE ROOGUO</p></a></a>
             </div>
             <div class="nav-search">
               <div class="form-group">
@@ -36,7 +35,7 @@
                 <li>
                   <a href="#">
                     <i class="fa-solid fa-user"></i>
-                    <span>login / join</span>
+                    <span>Connecter / Rejoindre</span>
                   </a>
                 </li>
                 <li>
@@ -52,27 +51,65 @@
       <section class="register">
         <div class="container">
           <div class="row">
-            <form action="#">
-              <h2>Sign up</h2>
+            <form action="#" method="post">
+              <h2>Inscription</h2>
               <div class="form-group">
-                <input type="text" name="" id="" placeholder="User name">
+                <input type="text" name="username" id="" placeholder="Nom d'utilisateur">
               </div>
               <div class="form-group">
-                <input type="email" name="" id="" placeholder="Email">
+                <input type="email" name="email" id="" placeholder="Email">
               </div>
               <div class="form-group">
-                <input type="password" name="" id="" placeholder="Password">
+                <input type="password" name="password" id="" placeholder="Mot de Passe">
               </div>
-              <span>Entering a password is required.</span>
+              <span>Le mot de passe est obligatoire.</span>
               <div class="form-group check">
                 <input type="checkbox" name="" id="update" checked>
-                <label for="update">Receive news and updates by email</label>
+                <label for="update">Recevoir des notifications par mail</label>
               </div>
               <div class="form-group check">
                 <input type="checkbox" name="" id="terms">
-                <label for="terms">I agree to the terms and privacy policy.</label>
+                <label for="terms">J'accepte les conditions et la politique de confidentialité.</label>
               </div>
-              <a href="#" class="btn btn-red">Sign up</a>
+              <button type="submit" class="btn btn-red">S'inscrire</button>
+              <?php
+                // Vérifier si le formulaire a été soumis
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Récupérer les valeurs du formulaire
+                    $username = $_POST["username"];
+                    $password = $_POST["password"];
+                    $email = $_POST["email"];
+
+
+                    // Connexion à la base de données
+                    $servername = "localhost";
+                    $username_db = "root";
+                    $password_db = "";
+                    $dbname = "forumelevage";
+
+                    $conn = new mysqli($servername, $username_db, $password_db, $dbname);
+
+                    // Vérifier la connexion
+                    if ($conn->connect_error) {
+                        die("Connexion à la base données échouée: " . $conn->connect_error);
+                    }
+
+                    // Préparer et exécuter la requête SQL pour vérifier l'identité de l'utilisateur
+                    $sql = "INSERT INTO utilisateurs (username, password, email) VALUES('$username', '$password', '$email')";
+                    $result = $conn->query($sql);
+
+                    if ($result === TRUE) {
+                      echo "Enregistrement réussi.";
+                      // Vous pouvez rediriger l'utilisateur vers une autre page ici si nécessaire
+                    } else {
+                        echo "Erreur lors de l'enregistrement: " . $conn->error;
+                    }
+
+                    // Fermer la connexion à la base de données
+                    $conn->close();
+                }
+                ?>
+
             </form>
           </div>
         </div>
