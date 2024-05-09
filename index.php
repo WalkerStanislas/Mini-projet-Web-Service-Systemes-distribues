@@ -274,7 +274,7 @@
                     // Connexion à la base de données
                     $servername = "localhost";
                     $username_db = "root";
-                    $password_db = "";
+                    $password_db = "root";
                     $dbname = "forumelevage";
 
                     $conn = new mysqli($servername, $username_db, $password_db, $dbname);
@@ -323,6 +323,27 @@
         </div>
       </div>
     </div>
+
+    <div class="postOverlay" id="postOverlay" onclick="closePopup()"></div>
+
+    <div class="popup-container" id="popup">
+        <h2 align="center">Nouveau Post</h2>
+        <form action="#" method="POST">
+          <label for="titre">Titre</label>
+          <input type="text" id="titre" name="titre" required>
+            
+			    <label for="category">Catégorie</label>
+          <input type="text" id="category" name="category" required>
+    
+          <label for="dateN">Date de Naissance</label>
+          <input type="text" id="dateN" name="dateNaissance" placeholder="jj/mm/aaaa" required>
+
+			    <label for="montant">Solde Initial</label>
+          <input type="number" id="montant" name="montant" required>
+          <button>Valider</button>
+        </form>
+    </div>
+
     <script
       src="https://kit.fontawesome.com/9e5ba2e3f5.js"
       crossorigin="anonymous"
@@ -331,43 +352,43 @@
 
 
     <?php
-// Function to retrieve the number of posts from the database
-function getPostCount() {
-    // You need to replace the database connection details with your own
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "ForumElevage";
+      // Function to retrieve the number of posts from the database
+      function getPostCount() {
+        // You need to replace the database connection details with your own
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
+        $dbname = "ForumElevage";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-    // SQL query to count the number of posts
-    $sql = "SELECT COUNT(*) AS count FROM discussions";
+        // SQL query to count the number of posts
+        $sql = "SELECT COUNT(*) AS count FROM discussions";
 
-    // Execute the query
-    $result = $conn->query($sql);
+        // Execute the query
+        $result = $conn->query($sql);
 
-    // Check if the query was successful
-    if ($result && $result->num_rows > 0) {
-        // Fetch the result
-        $row = $result->fetch_assoc();
-        // Close the database connection
-        $conn->close();
-        // Return the count of posts
-        return $row["count"];
-    } else {
-        // Close the database connection
-        $conn->close();
-        // Return 0 if there was an error
-        return 0;
-    }
-}
-?>
+        // Check if the query was successful
+        if ($result && $result->num_rows > 0) {
+            // Fetch the result
+            $row = $result->fetch_assoc();
+            // Close the database connection
+            $conn->close();
+            // Return the count of posts
+            return $row["count"];
+        } else {
+            // Close the database connection
+            $conn->close();
+            // Return 0 if there was an error
+            return 0;
+        }
+      }
+    ?>
   </body>
 </html>
