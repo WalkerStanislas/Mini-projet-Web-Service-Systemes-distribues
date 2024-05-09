@@ -232,9 +232,9 @@
           <div class="content">
             <div class="login-left">
               <form action="#" method="POST">
-                <input type="text" placeholder="Nom d'utilisateur" name="username" />
+                <input type="text" placeholder="Nom d'utilisateur" name="username" required />
                 <div class="form-group">
-                  <input type="password" placeholder="Mot de passe" name="password" />
+                  <input type="password" placeholder="Mot de passe" name="password" required />
                   <div><i class="fa-regular fa-eye"></i> <span>Voir</span></div>
                 </div>
                 <a href="#">Mot de passe oublié?</a>

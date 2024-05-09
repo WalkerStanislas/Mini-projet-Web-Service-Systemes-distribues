@@ -118,7 +118,7 @@
     <footer>
       <div class="container">
         <ul>
-          <li><a class="footDeco" href="#">Accueil</a></li>
+          <li><a class="footDeco" href="index.php">Accueil</a></li>
           <li><a class="footDeco" href="#">Contact</a></li>
           <li><a class="footDeco" href="#">Politique de confidentialité</a></li>
         </ul>
