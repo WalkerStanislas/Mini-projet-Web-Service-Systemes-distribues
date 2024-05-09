@@ -216,30 +216,10 @@
     <footer>
       <div class="container">
         <ul>
-          <li><a href="#">home</a></li>
-          <li><a href="#">about us</a></li>
-          <li><a href="#">terms of use</a></li>
-          <li><a href="#">privacy policy</a></li>
-          <li><a href="#">help</a></li>
-          <li><a href="#">business directory</a></li>
-          <li><a href="#">contact us</a></li>
-          <li><a href="#">grow your business</a></li>
+          <li><a class="footDeco" href="#">Accueil</a></li>
+          <li><a class="footDeco" href="#">Contact</a></li>
+          <li><a class="footDeco" href="#">Politique de confidentialité</a></li>
         </ul>
-        <p>
-          When you purchase through links on our site, we may earn an affiliate
-          commission, which supports our community.
-        </p>
-        <p>The Fora platform includes forum software by XenForo.</p>
-        <p>
-          hondashadow.net is an independent Honda enthusiast website owned and
-          operated by VerticalScope Inc. Content on hondashadow.net is generated
-          by its users. hondashadow.net is not in any way affiliated with Honda
-          Motor Company
-        </p>
-        <p>
-          VerticalScope Inc., 111 Peter Street, Suite 600, Toronto, Ontario, M5V
-          2H1, Canada
-        </p>
       </div>
     </footer>
     <div class="overlay">
@@ -252,9 +232,9 @@
           <div class="content">
             <div class="login-left">
               <form action="#" method="POST">
-                <input type="text" placeholder="Nom d'utilisateur" name="username" />
+                <input type="text" placeholder="Nom d'utilisateur" name="username" required />
                 <div class="form-group">
-                  <input type="password" placeholder="Mot de passe" name="password" />
+                  <input type="password" placeholder="Mot de passe" name="password" required />
                   <div><i class="fa-regular fa-eye"></i> <span>Voir</span></div>
                 </div>
                 <a href="#">Mot de passe oublié?</a>
