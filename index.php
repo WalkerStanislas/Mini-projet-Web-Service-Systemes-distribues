@@ -1,27 +1,27 @@
 <?php 
-    // demarrer une session
-    session_start(); 
+  // demarrer une session
+  session_start(); 
 
-    // Vérifier si l'utilisateur a cliqué sur le lien de déconnexion
-    if (isset($_GET['logout'])) {
-      // Détruire toutes les variables de session
-      $_SESSION = array();
+  // Vérifier si l'utilisateur a cliqué sur le lien de déconnexion
+  if (isset($_GET['logout'])) {
+    // Détruire toutes les variables de session
+    $_SESSION = array();
 
-      // Supprimer le cookie de session
-      if (ini_get("session.use_cookies")) {
-          $params = session_get_cookie_params();
-          setcookie(session_name(), '', time() - 42000,
-              $params["path"], $params["domain"],
-              $params["secure"], $params["httponly"]
-          );
-      }
+    // Supprimer le cookie de session
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
 
-      // Détruire la session
-      session_destroy();
+    // Détruire la session
+    session_destroy();
 
-      // Rediriger l'utilisateur vers une autre page après la déconnexion
-      header("Location: index.php"); // Remplacez "index.php" par l'URL de la page vers laquelle vous souhaitez rediriger l'utilisateur après la déconnexion
-      exit;
+    // Rediriger l'utilisateur vers une autre page après la déconnexion
+    header("Location: index.php"); // Remplacez "index.php" par l'URL de la page vers laquelle vous souhaitez rediriger l'utilisateur après la déconnexion
+    exit;
   }
 ?>
 <!DOCTYPE html>
@@ -56,7 +56,7 @@
                 <li>
                   <a href="#" onclick="openPopup()"><i class="fa-solid fa-plus-square"></i></a>
                 </li>
-                  <?php echo getUserIsConect() ?> 
+                <?php echo getUserIsConect() ?> 
                 <li>
                   <a href="?logout=1"><i class="fa-solid fa-power-off"></i></a>
                 </li>
@@ -427,6 +427,7 @@ function getUserIsConect(){
   if (isset($_SESSION['username'])){
       // Afficher le nom d'utilisateur
       echo '<li> <span> <h2 style= "color: white;">' . $_SESSION['username'] . '</h2></span> </li>';
+      // '<li><a href="?logout=1"><i class="fa-solid fa-power-off"></i></a></li>';
   } else{
     // Afficher le lien de connexion
     echo '<li class="join"><a href="#"><i class="fa-solid fa-user"></i><span>Se connecter / Rejoindre</span></a></li>';
