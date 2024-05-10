@@ -1,26 +1,28 @@
 <?php 
-    // demarrer une session
-    session_start(); 
+  // demarrer une session
+  session_start(); 
 
-    // Vérifier si l'utilisateur a cliqué sur le lien de déconnexion
-    if (isset($_GET['logout'])) {
-      // Détruire toutes les variables de session
-      $_SESSION = array();
+  // Vérifier si l'utilisateur a cliqué sur le lien de déconnexion
+  if (isset($_GET['logout'])) {
+    // Détruire toutes les variables de session
+    unset($_SESSION['username']);
+    // $_SESSION = array();
 
-      // Supprimer le cookie de session
-      if (ini_get("session.use_cookies")) {
-          $params = session_get_cookie_params();
-          setcookie(session_name(), '', time() - 42000,
-              $params["path"], $params["domain"],
-              $params["secure"], $params["httponly"]
-          );
-      }
+    // // Supprimer le cookie de session
+    // if (ini_get("session.use_cookies")) {
+    //     $params = session_get_cookie_params();
+    //     setcookie(session_name(), '', time() - 42000,
+    //         $params["path"], $params["domain"],
+    //         $params["secure"], $params["httponly"]
+    //     );
+    // }
 
-      // Détruire la session
-      session_destroy();
-      // Rediriger l'utilisateur vers une autre page après la déconnexion
-      header("Location: index.php");
-      exit; // Assurez-vous de sortir du script après la redirection
+    // // Détruire la session
+    // session_destroy();
+
+    // // Rediriger l'utilisateur vers une autre page après la déconnexion
+    header("Location: index.php"); // Remplacez "index.php" par l'URL de la page vers laquelle vous souhaitez rediriger l'utilisateur après la déconnexion
+    exit;
   }
 ?>
 
@@ -55,13 +57,13 @@
             </div>
             <div class="nav-group">
               <ul>
-                <li>
-                  <a href="#" onclick="openPopup()"><i class="fa-solid fa-comment"></i></a>
-                </li>
-                  <?php echo getUserIsConect() ?> 
-                <li>
+                <!-- <li>
+                  <a href="#" onclick="openPopup()"><i class="fa-solid fa-plus-square"></i></a>
+                </li> -->
+                <?php echo getUserIsConect() ?> 
+                <!-- <li>
                   <a href="?logout=1"><i class="fa-solid fa-power-off"></i></a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -73,7 +75,7 @@
         <div class="row">
           <section class="left">
             <h2>Ces discussions pourraient vous intérésser</h2>
-            
+  
 
               <div class="inner-left">
                 <?php include 'forum.php'; ?>
@@ -109,95 +111,52 @@
                 >
               </div>
             </div>
-            <div class="box top-forums">
-              <h3>Les meilleurs communautés</h3>
-              <a href="#">View All <i class="fa-solid fa-arrow-right"></i></a>
-              <div class="inner-box">
-                <h4><a href="#">Discussions</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 709.4k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>104.4M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">Discussions Techniques</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 395.7k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>124.2M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">member introductions</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 178.9k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>22.1M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">rides and events</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 5.3k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>1.6M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">canadian riders</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 4.2k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>1.1M</span>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="box top-contributors">
-              <h3>top contributors this month</h3>
-              <a href="#">View All <i class="fa-solid fa-arrow-right"></i></a>
-              <div class="inner-box">
-                <div class="img">
-                  <img src="img/pouletPicture.jpg" alt="" />
-                </div>
-                <div class="details">
-                  <a href="#">Captain D</a>
-                  <span>202 replies</span>
-                </div>
-              </div>
-              <div class="inner-box">
-                <div class="img">
-                  <img src="img/pouletPicture.jpg" alt="" />
-                </div>
-                <div class="details">
-                  <a href="#">oldguy</a>
-                  <span>196 replies</span>
-                </div>
-              </div>
-              <div class="inner-box">
-                <div class="img">
-                  <img src="img/pouletPicture.jpg" alt="" />
-                </div>
-                <div class="details">
-                  <a href="#">Inferno</a>
-                  <span>174 replies</span>
-                </div>
-              </div>
+              <h3>top contributeurs</h3>
+              <!-- <a href="#">View All <i class="fa-solid fa-arrow-right"></i></a> -->
+              <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "root";
+                $dbname = "forumelevage";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // SQL query to retrieve top contributors
+                $sql = "SELECT author, COUNT(*) AS post_count
+                        FROM discussions
+                        GROUP BY author
+                        ORDER BY post_count DESC
+                        LIMIT 5"; // Limit to the top 5 contributors
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while($row = $result->fetch_assoc()) {
+                      echo '<div class="inner-box">
+                      <div class="img">
+                        <img src="img/pouletPicture.jpg" alt="" />
+                      </div>
+                      <div class="details">
+                        <a href="#">'.$row["author"].'</a>
+                        <span>'.$row["post_count"].' post(s)</span>
+                      </div>
+                    </div>';
+                      // echo "Author: " . $row["author_name"]. " - Posts: " . $row["post_count"]. "<br>";
+                    }
+                } else {
+                    echo "0 posts";
+                }
+
+                $conn->close();
+              ?>
             </div>
             <div class="box recommended-communities">
               <h3>recommended communities</h3>
@@ -266,16 +225,16 @@
 
                 <?php
                 // Vérifier si le formulaire a été soumis
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!isset($_SESSION['username']) && $_SERVER["REQUEST_METHOD"] == "POST") {
                     $actual_username = ""; 
-                  // Récupérer les valeurs du formulaire
+                    // Récupérer les valeurs du formulaire
                     $username = $_POST["username"];
                     $password = $_POST["password"];
 
                     // Connexion à la base de données
                     $servername = "localhost";
                     $username_db = "root";
-                    $password_db = "";
+                    $password_db = "root";
                     $dbname = "forumelevage";
 
                     $conn = new mysqli($servername, $username_db, $password_db, $dbname);
@@ -292,8 +251,8 @@
                     if ($result->num_rows > 0) {
                         echo "Identité vérifiée. L'utilisateur est connecté.";
                         $_SESSION['username'] = $username;
-                        // Rediriger vers la page index.php
-                        header("Location: index.php");
+                        // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
+                        echo "<script>window.location.href='index.php'</script>";
                     } else {
                         echo "Identifiants incorrects. Veuillez réessayer.";
                         // Afficher un message d'erreur ou rediriger vers une autre page en cas d'identifiants incorrects
@@ -320,7 +279,7 @@
             </div>
           </div>
           <div class="bottom">
-            <h4>Nouveau frorum d'élevage?</h4>
+            <h4>Nouveau au forum d'élevage?</h4>
             <a href="subscribe.html">Rejoindre maintenant</a>
           </div>
         </div>
@@ -332,12 +291,13 @@
     <div class="popup-container" id="postPopup">
         <h2 align="center">Nouveau Post</h2>
         <i class="fa-solid fa-xmark close" onclick="closePopup()"></i>
-        <form action="#" method="POST">
+        <form id="postForm" action="new_post.php" method="POST">
           <label for="titre">Titre</label>
-          <input type="text" id="titre" name="titre" required>
+          <input type="text" id="titre" name="title" required>
 			    <label for="category">Catégorie</label>
           <input type="text" id="category" name="category" required>
-          <button class="btn btn-red">Valider</button>
+          <input type="hidden" id="author" name="author">
+          <button type="submit" class="btn btn-red">Valider</button>
         </form>
     </div>
 
@@ -355,7 +315,7 @@
         // You need to replace the database connection details with your own
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $password = "root";
         $dbname = "forumelevage";
 
         // Create connection
@@ -372,28 +332,44 @@
         // Execute the query
         $result = $conn->query($sql);
 
-    // Check if the query was successful
-    if ($result && $result->num_rows > 0) {
-        // Fetch the result
-        $row = $result->fetch_assoc();
-        // Close the database connection
-        $conn->close();
-        // Return the count of posts
-        return $row["count"];
-    } else {
-        // Close the database connection
-        $conn->close();
-        // Return 0 if there was an error
-        return 0;
-    }
-}
-function getUserIsConect(){
-  if (isset($_SESSION['username'])){
-      // Afficher le nom d'utilisateur
-      echo '<li> <span> <h2 style= "color: white;">' . $_SESSION['username'] . '</h2></span> </li>';
-  } else{
-    // Afficher le lien de connexion
-    echo '<li class="join"><a href="#"><i class="fa-solid fa-user"></i><span>Se connecter / Rejoindre</span></a></li>';
-  }
-}
-?>
+        // Check if the query was successful
+        if ($result && $result->num_rows > 0) {
+            // Fetch the result
+            $row = $result->fetch_assoc();
+            // Close the database connection
+            $conn->close();
+            // Return the count of posts
+            return $row["count"];
+        } else {
+            // Close the database connection
+            $conn->close();
+            // Return 0 if there was an error
+            return 0;
+        }
+      }
+
+      function getUserIsConect(){
+        if (isset($_SESSION['username'])) {
+            // Afficher le nom d'utilisateur
+            echo '<li><a href="#" onclick="openPopup()"><i class="fa-solid fa-plus-square"></i></a></li>';
+            echo '<li> <span> <h2 style= "color: white;">' . $_SESSION['username'] . '</h2></span> </li>';
+            echo '<li><a href="?logout=1"><i class="fa-solid fa-power-off"></i></a></li>';
+            // echo '<script>document.getElementById("author").value = "' . $_SESSION['username'].'"</script>';
+        } else {
+          // Afficher le lien de connexion
+          echo '<li class="join"><a href="#"><i class="fa-solid fa-user"></i><span>Se connecter / Rejoindre</span></a></li>';
+        }
+      }
+    ?>
+    <script>
+      // Add event listener to the form submission
+      document.getElementById("postForm").addEventListener("submit", function() {
+          // Retrieve the session variable value
+          var sessionVariableValue = "<?php echo $_SESSION['username']; ?>";
+          
+          // Set the value of the hidden input field to the session variable value
+          document.getElementById("author").value = sessionVariableValue;
+      });
+    </script>
+  </body>
+</html>

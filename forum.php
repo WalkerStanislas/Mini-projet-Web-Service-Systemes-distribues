@@ -2,7 +2,7 @@
 // Connexion à la base de données (à remplacer par vos propres informations de connexion)
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "forumelevage";
 
 // Connexion
@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Requête pour récupérer les discussions depuis la base de données
-$sql = "SELECT * FROM discussions";
+$sql = "SELECT * FROM discussions ORDER BY posted_at";
 $result = $conn->query($sql);
 
 // Affichage des discussions
