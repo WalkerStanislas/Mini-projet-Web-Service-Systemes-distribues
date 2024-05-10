@@ -108,95 +108,52 @@
                 >
               </div>
             </div>
-            <div class="box top-forums">
-              <h3>Les meilleurs communautés</h3>
-              <a href="#">View All <i class="fa-solid fa-arrow-right"></i></a>
-              <div class="inner-box">
-                <h4><a href="#">Discussions</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 709.4k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>104.4M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">Discussions Techniques</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 395.7k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>124.2M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">member introductions</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 178.9k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>22.1M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">rides and events</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 5.3k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>1.6M</span>
-                  </div>
-                </div>
-              </div>
-              <div class="inner-box">
-                <h4><a href="#">canadian riders</a></h4>
-                <div class="stats">
-                  <div class="stat comments">
-                    <i class="fa-solid fa-comment"></i><span> 4.2k</span>
-                  </div>
-                  <div class="stat views">
-                    <i class="fa-regular fa-eye"></i><span>1.1M</span>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="box top-contributors">
-              <h3>top contributors this month</h3>
-              <a href="#">View All <i class="fa-solid fa-arrow-right"></i></a>
-              <div class="inner-box">
-                <div class="img">
-                  <img src="img/pouletPicture.jpg" alt="" />
-                </div>
-                <div class="details">
-                  <a href="#">Captain D</a>
-                  <span>202 replies</span>
-                </div>
-              </div>
-              <div class="inner-box">
-                <div class="img">
-                  <img src="img/pouletPicture.jpg" alt="" />
-                </div>
-                <div class="details">
-                  <a href="#">oldguy</a>
-                  <span>196 replies</span>
-                </div>
-              </div>
-              <div class="inner-box">
-                <div class="img">
-                  <img src="img/pouletPicture.jpg" alt="" />
-                </div>
-                <div class="details">
-                  <a href="#">Inferno</a>
-                  <span>174 replies</span>
-                </div>
-              </div>
+              <h3>top contributeurs</h3>
+              <!-- <a href="#">View All <i class="fa-solid fa-arrow-right"></i></a> -->
+              <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "root";
+                $dbname = "forumelevage";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // SQL query to retrieve top contributors
+                $sql = "SELECT author, COUNT(*) AS post_count
+                        FROM discussions
+                        GROUP BY author
+                        ORDER BY post_count DESC
+                        LIMIT 5"; // Limit to the top 5 contributors
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while($row = $result->fetch_assoc()) {
+                      echo '<div class="inner-box">
+                      <div class="img">
+                        <img src="img/pouletPicture.jpg" alt="" />
+                      </div>
+                      <div class="details">
+                        <a href="#">'.$row["author"].'</a>
+                        <span>'.$row["post_count"].' post(s)</span>
+                      </div>
+                    </div>';
+                      // echo "Author: " . $row["author_name"]. " - Posts: " . $row["post_count"]. "<br>";
+                    }
+                } else {
+                    echo "0 posts";
+                }
+
+                $conn->close();
+              ?>
             </div>
             <div class="box recommended-communities">
               <h3>recommended communities</h3>
