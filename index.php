@@ -18,12 +18,14 @@
 
       // Détruire la session
       session_destroy();
-
       // Rediriger l'utilisateur vers une autre page après la déconnexion
-      header("Location: index.php"); // Remplacez "index.php" par l'URL de la page vers laquelle vous souhaitez rediriger l'utilisateur après la déconnexion
-      exit;
+      header("Location: index.php");
+      exit; // Assurez-vous de sortir du script après la redirection
   }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -290,7 +292,8 @@
                     if ($result->num_rows > 0) {
                         echo "Identité vérifiée. L'utilisateur est connecté.";
                         $_SESSION['username'] = $username;
-                        // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
+                        // Rediriger vers la page index.php
+                        header("Location: index.php");
                     } else {
                         echo "Identifiants incorrects. Veuillez réessayer.";
                         // Afficher un message d'erreur ou rediriger vers une autre page en cas d'identifiants incorrects
@@ -343,9 +346,10 @@
       crossorigin="anonymous">
     </script>
     <script src="js/index.js"></script>
+  </body>
+</html>
 
-
-    <?php
+<?php
       // Function to retrieve the number of posts from the database
       function getPostCount() {
         // You need to replace the database connection details with your own
@@ -393,5 +397,3 @@ function getUserIsConect(){
   }
 }
 ?>
-  </body>
-</html>
