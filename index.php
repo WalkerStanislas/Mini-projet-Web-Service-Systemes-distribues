@@ -5,21 +5,22 @@
   // Vérifier si l'utilisateur a cliqué sur le lien de déconnexion
   if (isset($_GET['logout'])) {
     // Détruire toutes les variables de session
-    $_SESSION = array();
+    unset($_SESSION['username']);
+    // $_SESSION = array();
 
-    // Supprimer le cookie de session
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
-        );
-    }
+    // // Supprimer le cookie de session
+    // if (ini_get("session.use_cookies")) {
+    //     $params = session_get_cookie_params();
+    //     setcookie(session_name(), '', time() - 42000,
+    //         $params["path"], $params["domain"],
+    //         $params["secure"], $params["httponly"]
+    //     );
+    // }
 
-    // Détruire la session
-    session_destroy();
+    // // Détruire la session
+    // session_destroy();
 
-    // Rediriger l'utilisateur vers une autre page après la déconnexion
+    // // Rediriger l'utilisateur vers une autre page après la déconnexion
     header("Location: index.php"); // Remplacez "index.php" par l'URL de la page vers laquelle vous souhaitez rediriger l'utilisateur après la déconnexion
     exit;
   }
@@ -53,13 +54,13 @@
             </div>
             <div class="nav-group">
               <ul>
-                <li>
+                <!-- <li>
                   <a href="#" onclick="openPopup()"><i class="fa-solid fa-plus-square"></i></a>
-                </li>
+                </li> -->
                 <?php echo getUserIsConect() ?> 
-                <li>
+                <!-- <li>
                   <a href="?logout=1"><i class="fa-solid fa-power-off"></i></a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -264,7 +265,7 @@
 
                 <?php
                 // Vérifier si le formulaire a été soumis
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!isset($_SESSION['username']) && $_SERVER["REQUEST_METHOD"] == "POST") {
                     $actual_username = ""; 
                     // Récupérer les valeurs du formulaire
                     $username = $_POST["username"];
@@ -291,6 +292,7 @@
                         echo "Identité vérifiée. L'utilisateur est connecté.";
                         $_SESSION['username'] = $username;
                         // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
+                        echo "<script>window.location.href='index.php'</script>";
                     } else {
                         echo "Identifiants incorrects. Veuillez réessayer.";
                         // Afficher un message d'erreur ou rediriger vers une autre page en cas d'identifiants incorrects
@@ -329,52 +331,13 @@
     <div class="popup-container" id="postPopup">
         <h2 align="center">Nouveau Post</h2>
         <i class="fa-solid fa-xmark close" onclick="closePopup()"></i>
-        <form action="#" method="POST">
+        <form id="postForm" action="new_post.php" method="POST">
           <label for="titre">Titre</label>
           <input type="text" id="titre" name="title" required>
 			    <label for="category">Catégorie</label>
           <input type="text" id="category" name="category" required>
+          <input type="hidden" id="author" name="author">
           <button type="submit" class="btn btn-red">Valider</button>
-          
-          <?php
-            // Vérifier si le formulaire a été soumis
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-              // Récupérer les valeurs du formulaire
-              $title = $_POST["title"];
-              $category = $_POST["category"];
-              $username = $_SESSION['username'];
-
-              // Connexion à la base de données
-              $servername = "localhost";
-              $username_db = "root";
-              $password_db = "root";
-              $dbname = "forumelevage";
-
-              $conn = new mysqli($servername, $username_db, $password_db, $dbname);
-
-              // Vérifier la connexion
-              if ($conn->connect_error) {
-                  die("Connexion échouée: " . $conn->connect_error);
-              }
-
-              // Préparer et exécuter la requête SQL pour vérifier l'identité de l'utilisateur
-              $sql = "INSERT INTO discussions (title, category, author) VALUES ('$title', '$category', '$username')";
-              $result = $conn->query($sql);
-
-              if ($result === TRUE) {
-                  echo "Post réussi";
-                  echo "<script>window.location.href='index.php'</script>";
-                  // Rediriger vers une page sécurisée ou exécuter d'autres actions après la connexion réussie
-              } else {
-                  echo "Erreur lors de l'enregistrement du post. Veuillez réessayer.";
-                  // Afficher un message d'erreur ou rediriger vers une autre page en cas d'identifiants incorrects
-              }
-
-              // Fermer la connexion à la base de données
-              $conn->close();
-            }
-          ?>
-
         </form>
     </div>
 
@@ -408,31 +371,44 @@
         // Execute the query
         $result = $conn->query($sql);
 
-    // Check if the query was successful
-    if ($result && $result->num_rows > 0) {
-        // Fetch the result
-        $row = $result->fetch_assoc();
-        // Close the database connection
-        $conn->close();
-        // Return the count of posts
-        return $row["count"];
-    } else {
-        // Close the database connection
-        $conn->close();
-        // Return 0 if there was an error
-        return 0;
-    }
-}
-function getUserIsConect(){
-  if (isset($_SESSION['username'])){
-      // Afficher le nom d'utilisateur
-      echo '<li> <span> <h2 style= "color: white;">' . $_SESSION['username'] . '</h2></span> </li>';
-      // '<li><a href="?logout=1"><i class="fa-solid fa-power-off"></i></a></li>';
-  } else{
-    // Afficher le lien de connexion
-    echo '<li class="join"><a href="#"><i class="fa-solid fa-user"></i><span>Se connecter / Rejoindre</span></a></li>';
-  }
-}
-?>
+        // Check if the query was successful
+        if ($result && $result->num_rows > 0) {
+            // Fetch the result
+            $row = $result->fetch_assoc();
+            // Close the database connection
+            $conn->close();
+            // Return the count of posts
+            return $row["count"];
+        } else {
+            // Close the database connection
+            $conn->close();
+            // Return 0 if there was an error
+            return 0;
+        }
+      }
+
+      function getUserIsConect(){
+        if (isset($_SESSION['username'])) {
+            // Afficher le nom d'utilisateur
+            echo '<li><a href="#" onclick="openPopup()"><i class="fa-solid fa-plus-square"></i></a></li>';
+            echo '<li> <span> <h2 style= "color: white;">' . $_SESSION['username'] . '</h2></span> </li>';
+            echo '<li><a href="?logout=1"><i class="fa-solid fa-power-off"></i></a></li>';
+            // echo '<script>document.getElementById("author").value = "' . $_SESSION['username'].'"</script>';
+        } else {
+          // Afficher le lien de connexion
+          echo '<li class="join"><a href="#"><i class="fa-solid fa-user"></i><span>Se connecter / Rejoindre</span></a></li>';
+        }
+      }
+    ?>
+    <script>
+      // Add event listener to the form submission
+      document.getElementById("postForm").addEventListener("submit", function() {
+          // Retrieve the session variable value
+          var sessionVariableValue = "<?php echo $_SESSION['username']; ?>";
+          
+          // Set the value of the hidden input field to the session variable value
+          document.getElementById("author").value = sessionVariableValue;
+      });
+    </script>
   </body>
 </html>
